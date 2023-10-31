@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class DockerHelloWorld {
     	@GetMapping("/hello")
 	public String hello() {
-		return "Welcome to Deployment";
+		return "Welcome to My Kubernetes Cluster";
 	}
 }
