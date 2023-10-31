@@ -21,21 +21,22 @@ pipeline {
         stage('Docker Login') {
             steps {
                 withCredentials([string(credentialsId: 'mashihimasha', variable: 'Dockerpwd')]) {
-                    sh "docker login -u mashihimasha -p ${Dockerpwd}"
+                    sh "docker login -u mashihimasha -p \${Dockerpwd}"
                 }
             }
         }
         stage('Docker Push') {
             steps {
-                sh 'docker push mashihimasha/docker_jenkins_springboot:${BUILD_NUMBER}'
+                sh "docker push mashihimasha/docker_jenkins_springboot:${BUILD_NUMBER}"
             }
         }
         stage('Kubernetes Deploy'){
-            steps{
+            steps {
                 withAWS(credentials: 'AWS_CREDENTIALS', region: 'eu-north-1') {
-                  script {
-                    sh ('aws eks update-kubeconfig --name jenkins-devops-cluster --region eu-north-1')
-                    sh 'kubectl apply -f k8s-spring-boot-deployment.yml'
+                    script {
+                        sh 'aws eks update-kubeconfig --name jenkins-devops-cluster --region eu-north-1'
+                        sh 'kubectl apply -f k8s-spring-boot-deployment.yml'
+                    }
                 }
             }
         }
