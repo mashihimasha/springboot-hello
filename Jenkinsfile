@@ -34,6 +34,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'AWS_CREDENTIALS', variable: 'AWS_CREDENTIALS')]) {
                     sh "echo \${AWS_CREDENTIALS} > aws-credentials.json"
+                    sh "export PATH=\$PATH:/path/to/jq"  // Add the path to 'jq' executable
                     sh "aws configure set aws_access_key_id \$(jq -r .accessKey aws-credentials.json)"
                     sh "aws configure set aws_secret_access_key \$(jq -r .secretKey aws-credentials.json)"
                     sh "aws eks update-kubeconfig --name jenkins-devops-cluster --region eu-north-1"
@@ -41,5 +42,6 @@ pipeline {
                 }
             }
         }
+
     }
 }
