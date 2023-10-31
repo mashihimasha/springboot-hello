@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        KUBECONFIG = '/home/ec2-user/.kube/config'
-    }
     stages {
         stage('Compile and Clean') {
             steps {
@@ -31,11 +28,6 @@ pipeline {
         stage('Docker Push') {
             steps {
                 sh 'docker push mashihimasha/docker_jenkins_springboot:${BUILD_NUMBER}'
-            }
-        }
-        stage('Authenticate to Kubernetes') {
-            steps {
-                sh 'kubectl config use-context arn:aws:eks:eu-north-1:834905904425:cluster/jenkins-devops-cluster'
             }
         }
         stage('Kubernetes Deploy'){
