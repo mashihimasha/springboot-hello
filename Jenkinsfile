@@ -30,11 +30,6 @@ pipeline {
                 sh 'docker push mashihimasha/docker_jenkins_springboot:${BUILD_NUMBER}'
             }
         }
-        stage('Authenticate to Kubernetes') {
-            steps {
-                sh 'kubectl config use-context arn:aws:eks:eu-north-1:834905904425:cluster/jenkins-devops-cluster'
-            }
-        }
         stage('Kubernetes Deploy'){
             steps{
                 withCredentials([string(credentialsId: 'AKIA4EZCFCUU7KNGRI2A', variable: 'AWS_CREDENTIALS')]) {
