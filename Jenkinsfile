@@ -32,11 +32,11 @@ pipeline {
         }
         stage('Kubernetes Deploy'){
             steps {
-                withAWS(credentials: 'AWS_CREDENTIALS', region: 'eu-north-1') {
-                    script {
-                        sh 'aws eks update-kubeconfig --name jenkins-devops-cluster --region eu-north-1'
-                        sh 'kubectl apply -f k8s-spring-boot-deployment.yml'
-                    }
+                withCredentials([string(credentialsId: 'AWS_CREDENTIALS', variable: 'AWS_CREDENTIALS')]) {
+                    sh "aws configure set aws_access_key_id \${AWS_CREDENTIALS}"
+                    sh "aws configure set aws_secret_access_key \${AWS_CREDENTIALS}"
+                    sh "aws eks update-kubeconfig --name jenkins-devops-cluster --region eu-north-1"
+                    sh 'kubectl apply -f k8s-spring-boot-deployment.yml'
                 }
             }
         }
