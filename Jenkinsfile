@@ -32,7 +32,9 @@ pipeline {
         }
         stage('Kubernetes Deploy'){
             steps{
-                withCredentials([string(credentialsId: 'AKIA4EZCFCUU7KNGRI2A', variable: 'AWS_CREDENTIALS')]) {
+                withAWS(credentials: 'AWS_CREDENTIALS', region: 'eu-north-1') {
+                  script {
+                    sh ('aws eks update-kubeconfig --name jenkins-devops-cluster --region eu-north-1')
                     sh 'kubectl apply -f k8s-spring-boot-deployment.yml'
                 }
             }
