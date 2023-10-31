@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        KUBECONFIG = '/home/ec2-user/.kube/config'
-    }
     stages {
         stage('Compile and Clean') {
             steps {
@@ -40,7 +37,9 @@ pipeline {
         }
         stage('Kubernetes Deploy'){
             steps{
-                sh 'kubectl apply -f k8s-spring-boot-deployment.yml'
+                withCredentials([string(credentialsId: 'AKIA4EZCFCUU7KNGRI2A', variable: 'AWS_CREDENTIALS')]) {
+                    sh 'kubectl apply -f k8s-spring-boot-deployment.yml'
+                }
             }
         }
     }
