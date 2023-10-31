@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: springboot-hello
+  template:
+    metadata:
+      labels:
+        app: springboot-hello
+    spec:
+      containers:
+        - name: springboot
+          image: mashihimasha/docker_jenkins_springboot:${BUILD_NUMBER}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PORT
+              value: "8080"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-hello
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: springboot-hello

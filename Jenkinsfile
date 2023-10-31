@@ -35,9 +35,9 @@ pipeline {
                 sh 'docker run -itd -p 8081:8080 mashihimasha/docker_jenkins_springboot:${BUILD_NUMBER}'
             }
         }
-        stage('Archiving') {
-            steps {
-                archiveArtifacts '**/target/*.jar'
+        stage('Kubernetes Deploy'){
+            steps{
+                sh 'kubectl apply -f k8s-spring-boot-deployment.yml'
             }
         }
     }
