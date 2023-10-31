@@ -15,7 +15,7 @@ pipeline {
             steps {
                 echo "Hello Java Express"
                 sh 'ls'
-                sh 'docker build -t mashihimasha/docker_jenkins_springboot:${BUILD_NUMBER} .'
+                sh 'docker build -t mashihimasha/docker_jenkins_springboot:latest .'
             }
         }
         stage('Docker Login') {
@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Docker Push') {
             steps {
-                sh "docker push mashihimasha/docker_jenkins_springboot:${BUILD_NUMBER}"
+                sh "docker push mashihimasha/docker_jenkins_springboot:latest"
             }
         }
         stage('Kubernetes Deploy'){
