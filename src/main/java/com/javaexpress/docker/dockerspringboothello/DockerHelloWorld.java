@@ -11,6 +11,6 @@ public class DockerHelloWorld {
 	@GetMapping
 	public String getName() {
 		
-		return "Web Hook Successful";
+		return "Welcome to Deployment";
 	}
 }
