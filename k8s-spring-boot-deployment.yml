@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: springboot
-          image: mashihimasha/docker_jenkins_springboot:latest
+          image: mashihimasha/docker_jenkins_springboot:latest_2
           ports:
             - containerPort: 8080
           env:
